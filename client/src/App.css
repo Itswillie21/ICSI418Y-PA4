@@ -1,0 +1,176 @@
+/* Main page layout */
+main {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+/* Signup card */
+section {
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+    background-color: white;
+    border: 2px solid #d7b45a;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 24px;
+    text-align: center;
+    color: #4b286d;
+}
+
+/* Form layout */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #3f3f46;
+}
+
+input {
+    padding: 11px;
+    font-size: 16px;
+    border: 1px solid #b8b8b8;
+    border-radius: 6px;
+    background-color: white;
+    color: #222222;
+}
+
+input:focus {
+    outline: 2px solid #d7b45a;
+    border-color: #4b286d;
+}
+
+/* Submit button */
+button {
+    margin-top: 22px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background-color: #4b286d;
+    color: white;
+}
+
+button:hover {
+    background-color: #3c2057;
+}
+
+/* Server feedback */
+.message {
+    margin-top: 18px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.message.error {
+    color: #b42318;
+}
+
+.message.success {
+    color: #2e7d32;
+}
+
+/* Switch between login and signup */
+.switch-button {
+    width: 100%;
+    margin-top: 12px;
+    background-color: transparent;
+    color: #4b286d;
+    border: 1px solid #4b286d;
+}
+
+.switch-button:hover {
+    background-color: #f4f1f7;
+}
+
+/* PA3 navigation */
+.site-header {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.site-header h1 {
+    margin-bottom: 14px;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.main-nav button {
+    margin-top: 0;
+}
+
+/* Project forms */
+textarea,
+select {
+    padding: 11px;
+    font-size: 16px;
+    border: 1px solid #b8b8b8;
+    border-radius: 6px;
+    background-color: white;
+    color: #222222;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.project-card,
+.projects-section,
+.membership-section {
+    width: 100%;
+    max-width: 700px;
+}
+
+.project-list {
+    display: grid;
+    gap: 16px;
+}
+
+.project-item {
+    padding: 18px;
+    border: 1px solid #d7b45a;
+    border-radius: 8px;
+}
+
+.project-item h2 {
+    color: #4b286d;
+}
+
+.member-list {
+    margin: 16px 0;
+}
+
+.member-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid #dddddd;
+}
+
+.member-item button {
+    width: auto;
+    margin-top: 0;
+}

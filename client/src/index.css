@@ -1,0 +1,13 @@
+/* Base page styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f1f7;
+    color: #222222;
+}
