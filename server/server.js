@@ -1,3 +1,4 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -6,6 +7,7 @@ require("dotenv").config();
 const User = require("./models/User");
 const Project = require("./models/Project");
 const ProjectMembership = require("./models/ProjectMembership");
+const UserStory = require("./models/UserStory");
 
 const app = express();
 
@@ -14,7 +16,7 @@ app.use(express.json());
 
 // Basic route to confirm the server is running
 app.get("/", function (req, res) {
-    res.send("PA3 server is running");
+    res.send("PA4 server is running");
 });
 
 // Create a new user
@@ -50,7 +52,6 @@ app.post("/signup", async function (req, res) {
         });
     } catch (error) {
         console.error("Signup error:", error);
-
         res.status(500).json({
             message: "Server error while creating user."
         });
@@ -87,7 +88,6 @@ app.post("/login", async function (req, res) {
         });
     } catch (error) {
         console.error("Login error:", error);
-
         res.status(500).json({
             message: "Server error while logging in."
         });
@@ -104,7 +104,6 @@ app.get("/users", async function (req, res) {
         res.status(200).json(users);
     } catch (error) {
         console.error("Get users error:", error);
-
         res.status(500).json({
             message: "Server error while retrieving users."
         });
@@ -158,7 +157,6 @@ app.post("/projects", async function (req, res) {
         });
     } catch (error) {
         console.error("Create project error:", error);
-
         res.status(500).json({
             message: "Server error while creating project."
         });
@@ -176,7 +174,6 @@ app.get("/projects", async function (req, res) {
         res.status(200).json(projects);
     } catch (error) {
         console.error("Get projects error:", error);
-
         res.status(500).json({
             message: "Server error while retrieving projects."
         });
@@ -198,21 +195,18 @@ app.get(
                 });
             }
 
-            const memberships =
-                await ProjectMembership.find({
-                    project_id: projectId
-                }).populate(
-                    "user_id",
-                    "_id f_name l_name username"
-                );
+            const memberships = await ProjectMembership.find({
+                project_id: projectId
+            }).populate(
+                "user_id",
+                "_id f_name l_name username"
+            );
 
             res.status(200).json(memberships);
         } catch (error) {
             console.error("Get members error:", error);
-
             res.status(500).json({
-                message:
-                    "Server error while retrieving project members."
+                message: "Server error while retrieving project members."
             });
         }
     }
@@ -248,16 +242,14 @@ app.post(
                 });
             }
 
-            const existingMembership =
-                await ProjectMembership.findOne({
-                    project_id: projectId,
-                    user_id: user_id
-                });
+            const existingMembership = await ProjectMembership.findOne({
+                project_id: projectId,
+                user_id: user_id
+            });
 
             if (existingMembership) {
                 return res.status(409).json({
-                    message:
-                        "User is already a member of this project."
+                    message: "User is already a member of this project."
                 });
             }
 
@@ -273,10 +265,8 @@ app.post(
             });
         } catch (error) {
             console.error("Add member error:", error);
-
             res.status(500).json({
-                message:
-                    "Server error while adding project member."
+                message: "Server error while adding project member."
             });
         }
     }
@@ -297,23 +287,33 @@ app.delete(
                 });
             }
 
+            // Project Leads cannot be removed
             if (project.project_lead_id.toString() === userId) {
                 return res.status(400).json({
-                    message:
-                        "The Project Lead cannot be removed."
+                    message: "The Project Lead cannot be removed."
                 });
             }
 
-            const membership =
-                await ProjectMembership.findOneAndDelete({
-                    project_id: projectId,
-                    user_id: userId
+            // PA4: Protect members with assigned stories
+            const assignedStory = await UserStory.exists({
+                project_id: projectId,
+                assigned_user_id: userId
+            });
+
+            if (assignedStory) {
+                return res.status(409).json({
+                    message: "This member has assigned stories. Reassign, unassign, or delete those stories before removing the member."
                 });
+            }
+
+            const membership = await ProjectMembership.findOneAndDelete({
+                project_id: projectId,
+                user_id: userId
+            });
 
             if (!membership) {
                 return res.status(404).json({
-                    message:
-                        "Project membership does not exist."
+                    message: "Project membership does not exist."
                 });
             }
 
@@ -324,12 +324,14 @@ app.delete(
             console.error("Remove member error:", error);
 
             res.status(500).json({
-                message:
-                    "Server error while removing project member."
+                message: "Server error while removing project member."
             });
         }
     }
 );
+
+// Register PA4 user story routes
+require("./storyRoutes")(app);
 
 const PORT = 5000;
 

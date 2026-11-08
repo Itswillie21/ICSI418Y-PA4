@@ -1,9 +1,11 @@
+
 import { useState } from "react";
 import "./App.css";
 
 import CreateProject from "./components/CreateProject";
 import ProjectList from "./components/ProjectList";
 import MembershipManager from "./components/MembershipManager";
+import StoryBacklog from "./components/StoryBacklog";
 
 function App() {
     const [page, setPage] = useState("account");
@@ -79,7 +81,6 @@ function App() {
             }
         } catch (error) {
             console.error("Signup request failed:", error);
-
             setMessage("Could not connect to the server.");
             setIsError(true);
         }
@@ -120,7 +121,6 @@ function App() {
             }
         } catch (error) {
             console.error("Login request failed:", error);
-
             setMessage("Could not connect to the server.");
             setIsError(true);
         }
@@ -174,6 +174,15 @@ function App() {
                             }}
                         >
                             Memberships
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={function () {
+                                setPage("backlog");
+                            }}
+                        >
+                            Backlog
                         </button>
 
                         <button
@@ -314,6 +323,10 @@ function App() {
                         {page === "memberships" && (
                             <MembershipManager />
                         )}
+
+                        {page === "backlog" && (
+                            <StoryBacklog />
+                        )}
                     </>
                 )}
             </main>
@@ -321,4 +334,4 @@ function App() {
     );
 }
 
-export default App
+export default App;

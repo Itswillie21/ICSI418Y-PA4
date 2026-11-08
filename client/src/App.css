@@ -174,3 +174,52 @@ textarea {
     width: auto;
     margin-top: 0;
 }
+
+
+/* Project backlog */
+.backlog-section {
+    width: 100%;
+    max-width: 850px;
+}
+
+.backlog-section > select {
+    width: 100%;
+}
+
+.story-list {
+    display: grid;
+    gap: 14px;
+    margin: 18px 0;
+}
+
+.story-item {
+    padding: 16px;
+    border: 1px solid #d7b45a;
+    border-radius: 8px;
+}
+
+.story-item h3 {
+    margin-top: 0;
+    color: #4b286d;
+}
+
+.story-item p {
+    overflow-wrap: anywhere;
+}
+
+.story-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.story-actions button {
+    width: auto;
+    margin-top: 8px;
+}
+
+.story-form {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #dddddd;
+}
